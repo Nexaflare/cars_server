@@ -25,6 +25,27 @@ let UsersService = class UsersService {
         const user = this.repo.create({ email, password });
         return this.repo.save(user);
     }
+    findOne(id) {
+        return this.repo.findOneBy({ id });
+    }
+    find(email) {
+        return this.repo.find({ where: { email } });
+    }
+    async update(id, attrs) {
+        const user = await this.findOne(id);
+        if (!user) {
+            throw new Error('User not found');
+        }
+        Object.assign(user, attrs);
+        return this.repo.save(user);
+    }
+    async remove(id) {
+        const user = await this.findOne(id);
+        if (!user) {
+            throw new Error('User not found');
+        }
+        return this.repo.remove(user);
+    }
 };
 exports.UsersService = UsersService;
 exports.UsersService = UsersService = __decorate([
