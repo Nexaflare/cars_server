@@ -71,3 +71,7 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+
+
+# // Entity instances help to control and maintain the code and detect bugs  otherwise, we will not see anything in the console  
