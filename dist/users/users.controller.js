@@ -18,6 +18,7 @@ const create_user_dto_1 = require("./dtos/create-user.dto");
 const update_user_dto_1 = require("./dtos/update-user.dto");
 const users_service_1 = require("./users.service");
 const serialize_interceptor_1 = require("../interceptors/serialize.interceptor");
+const user_dto_1 = require("./dtos/user.dto");
 let UsersController = class UsersController {
     constructor(usersService) {
         this.usersService = usersService;
@@ -26,7 +27,7 @@ let UsersController = class UsersController {
         this.usersService.create(body.email, body.password);
     }
     async findUser(id) {
-        console.log(...oo_oo(`2074979499_32_2_32_35_4`, `Handler is running`));
+        console.log(...oo_oo(`1428183187_34_2_34_35_4`, `Handler is running`));
         const user = await this.usersService.findOne(parseInt(id));
         if (!user) {
             throw new common_1.NotFoundException('User not found');
@@ -52,7 +53,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "createUser", null);
 __decorate([
-    (0, common_1.UseInterceptors)(serialize_interceptor_1.SerializeInterceptor),
+    (0, common_1.UseInterceptors)(new serialize_interceptor_1.SerializeInterceptor(user_dto_1.UserDto)),
     (0, common_1.Get)('/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
