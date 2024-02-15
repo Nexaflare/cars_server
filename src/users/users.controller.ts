@@ -8,6 +8,8 @@ import {
 	Param,
 	Query,
 	NotFoundException,
+	UseInterceptors,
+	ClassSerializerInterceptor,
 } from '@nestjs/common'
 import { CreateUserDto } from './dtos/create-user.dto'
 import { UpdateUserDto } from './dtos/update-user.dto'
@@ -23,10 +25,11 @@ export class UsersController {
 	}
 
 	// Param is used to extract information from incoming request route
+	@UseInterceptors(ClassSerializerInterceptor)
 	@Get('/:id')
 	async findUser(@Param('id') id: string) {
 		const user = await this.usersService.findOne(parseInt(id))
-		if(!user) {
+		if (!user) {
 			throw new NotFoundException('User not found')
 		}
 		return user
