@@ -11,9 +11,12 @@ import { plainToClass } from 'class-transformer'
 // import { UserDto } from '../users/dtos/user.dto'
 // implements
 
-export function Serialize(dto: any) {
+interface ClassConstructor {
+	new (...args: any[]): {}
+	// using ClassConstructor instead of any prevents errors from passing. if we use ClassConstructor and pass a string or a number in @Serialize('num/str') in user.controller, for example, it will throw an error
+}
+export function Serialize(dto: ClassConstructor) {
 	return UseInterceptors(new SerializeInterceptor(dto))
-
 }
 export class SerializeInterceptor implements NestInterceptor {
 	constructor(private dto: any) {}
