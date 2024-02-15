@@ -75,3 +75,5 @@ Nest is [MIT licensed](LICENSE).
 
 
 # // Entity instances help to control and maintain the code and detect bugs  otherwise, we will not see anything in the console  
+
+# // interceptor changes response before it sends it back to the request  // can look at it as if it was a middleware
