@@ -11,16 +11,15 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.User = void 0;
 const typeorm_1 = require("typeorm");
-const class_transformer_1 = require("class-transformer");
 let User = class User {
     logInsert() {
-        console.log(...oo_oo(`312522761_26_2_26_47_4`, 'Inserted user with id', this.id));
+        console.log(...oo_oo(`2942926909_26_2_26_47_4`, 'Inserted user with id', this.id));
     }
     logUpdate() {
-        console.log(...oo_oo(`312522761_31_2_31_46_4`, 'Updated user with id', this.id));
+        console.log(...oo_oo(`2942926909_31_2_31_46_4`, 'Updated user with id', this.id));
     }
     logRemove() {
-        console.log(...oo_oo(`312522761_36_2_36_46_4`, 'Removed User with id', this.id));
+        console.log(...oo_oo(`2942926909_36_2_36_46_4`, 'Removed User with id', this.id));
     }
 };
 exports.User = User;
@@ -34,7 +33,6 @@ __decorate([
 ], User.prototype, "email", void 0);
 __decorate([
     (0, typeorm_1.Column)(),
-    (0, class_transformer_1.Exclude)(),
     __metadata("design:type", String)
 ], User.prototype, "password", void 0);
 __decorate([
