@@ -10,8 +10,13 @@ import { map } from 'rxjs/operators'
 import { plainToClass } from 'class-transformer'
 // import { UserDto } from '../users/dtos/user.dto'
 // implements
+
+export function Serialize(dto: any) {
+	return UseInterceptors(new SerializeInterceptor(dto))
+
+}
 export class SerializeInterceptor implements NestInterceptor {
-	constructor(private dto: any){}
+	constructor(private dto: any) {}
 	intercept(context: ExecutionContext, handler: CallHandler): Observable<any> {
 		// // Run something before a request is handled by the request handler
 		// console.log(`I'm running before the handler`, context)
@@ -20,7 +25,7 @@ export class SerializeInterceptor implements NestInterceptor {
 				// // Run something before the response is sent out
 				// console.log(`I'm running before response is sent out`, data)
 				return plainToClass(this.dto, data, {
-          excludeExtraneousValues: true,
+					excludeExtraneousValues: true,
 					// only going to share data that is marked with @Expose directive  the rest will be ignored
 				})
 			})

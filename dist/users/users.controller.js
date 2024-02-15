@@ -27,7 +27,7 @@ let UsersController = class UsersController {
         this.usersService.create(body.email, body.password);
     }
     async findUser(id) {
-        console.log(...oo_oo(`1428183187_34_2_34_35_4`, `Handler is running`));
+        console.log(...oo_oo(`3204440362_34_2_34_35_4`, `Handler is running`));
         const user = await this.usersService.findOne(parseInt(id));
         if (!user) {
             throw new common_1.NotFoundException('User not found');
@@ -53,7 +53,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], UsersController.prototype, "createUser", null);
 __decorate([
-    (0, common_1.UseInterceptors)(new serialize_interceptor_1.SerializeInterceptor(user_dto_1.UserDto)),
+    (0, serialize_interceptor_1.Serialize)(user_dto_1.UserDto),
     (0, common_1.Get)('/:id'),
     __param(0, (0, common_1.Param)('id')),
     __metadata("design:type", Function),
