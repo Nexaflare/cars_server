@@ -14,8 +14,12 @@ import {
 import { CreateUserDto } from './dtos/create-user.dto'
 import { UpdateUserDto } from './dtos/update-user.dto'
 import { UsersService } from './users.service'
-import { SerializeInterceptor } from '../interceptors/serialize.interceptor'
+import { Serialize } from '../interceptors/serialize.interceptor'
+import { UserDto } from './dtos/user.dto'
+
 @Controller('auth')
+@Serialize(UserDto)
+// Can use @Serialize(UserDto) in any specific request if we want to c (if we have request handlers and we want to customize the response of each of them)
 export class UsersController {
 	constructor(private usersService: UsersService) {}
 
@@ -24,12 +28,11 @@ export class UsersController {
 		// console.log(body)
 		this.usersService.create(body.email, body.password)
 	}
-  //							ClassSerializerInterceptor 2 lines below
+	//							ClassSerializerInterceptor 2 lines below
 	// Param is used to extract information from incoming request route
-	@UseInterceptors(SerializeInterceptor)
 	@Get('/:id')
 	async findUser(@Param('id') id: string) {
-		console.log(`Handler is running`) 
+		console.log(`Handler is running`)
 		const user = await this.usersService.findOne(parseInt(id))
 		if (!user) {
 			throw new NotFoundException('User not found')
