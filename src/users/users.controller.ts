@@ -18,6 +18,8 @@ import { Serialize } from '../interceptors/serialize.interceptor'
 import { UserDto } from './dtos/user.dto'
 
 @Controller('auth')
+@Serialize(UserDto)
+// Can use @Serialize(UserDto) in any specific request if we want to c (if we have request handlers and we want to customize the response of each of them)
 export class UsersController {
 	constructor(private usersService: UsersService) {}
 
@@ -28,7 +30,6 @@ export class UsersController {
 	}
 	//							ClassSerializerInterceptor 2 lines below
 	// Param is used to extract information from incoming request route
-	@Serialize(UserDto)
 	@Get('/:id')
 	async findUser(@Param('id') id: string) {
 		console.log(`Handler is running`)
