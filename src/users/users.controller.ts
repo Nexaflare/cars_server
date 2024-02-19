@@ -16,17 +16,21 @@ import { UpdateUserDto } from './dtos/update-user.dto'
 import { UsersService } from './users.service'
 import { Serialize } from '../interceptors/serialize.interceptor'
 import { UserDto } from './dtos/user.dto'
+import { AuthService } from './auth.service'
 
 @Controller('auth')
 @Serialize(UserDto)
 // Can use @Serialize(UserDto) in any specific request if we want to c (if we have request handlers and we want to customize the response of each of them)
 export class UsersController {
-	constructor(private usersService: UsersService) {}
+	constructor(
+		private usersService: UsersService,
+		private authService: AuthService
+		) {}
 
 	@Post('/signup')
 	createUser(@Body() body: CreateUserDto) {
 		// console.log(body)
-		this.usersService.create(body.email, body.password)
+		return this.authService.signup(body.email, body.password)
 	}
 	//							ClassSerializerInterceptor 2 lines below
 	// Param is used to extract information from incoming request route
