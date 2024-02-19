@@ -32,7 +32,12 @@ export class UsersController {
 		// console.log(body)
 		return this.authService.signup(body.email, body.password)
 	}
-	//							ClassSerializerInterceptor 2 lines below
+
+	@Post('/signin')
+	signin(@Body() body: CreateUserDto){
+		return this.authService.signin(body.email, body.password)
+	}
+	//							ClassSerializerInterceptor 3-4 lines below
 	// Param is used to extract information from incoming request route
 	@Get('/:id')
 	async findUser(@Param('id') id: string) {
