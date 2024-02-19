@@ -15,6 +15,10 @@ export class UsersService {
 	}
 
 	findOne(id: number) {
+		// this code prevents returning the first user in db when we send 'whoami' request
+		if(!id) {
+			return null;
+		}
 		return this.repo.findOneBy({ id })
 	}
 

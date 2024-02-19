@@ -10,6 +10,8 @@ import {
 	NotFoundException,
 	UseInterceptors,
 	ClassSerializerInterceptor,
+	Session,
+	BadRequestException,
 } from '@nestjs/common'
 import { CreateUserDto } from './dtos/create-user.dto'
 import { UpdateUserDto } from './dtos/update-user.dto'
@@ -25,14 +27,48 @@ export class UsersController {
 	constructor(
 		private usersService: UsersService,
 		private authService: AuthService
-		) {}
+	) {}
+
+	//***TESTING COOKIES***/
+	// @Get('/colors/:color')
+	// setColor(@Param('color') color: string, @Session() session: any) {
+	// 	session.color = color
+	// }
+
+	// @Get('/colors')
+	// getColor(@Session() session:any) {
+	// 	return session.color;
+	// }
+
+	@Get('/whoami')
+	async whoAmI(@Session() session: any) {
+		const user = await this.usersService.findOne(session.userId)
+		if(!session.userId) {
+			throw new BadRequestException('User not found')
+		}
+		return user
+	}
+
+	@Post('/signout')
+	signOut(@Session() session: any) {
+		session.userId = null
+	}
 
 	@Post('/signup')
-	createUser(@Body() body: CreateUserDto) {
+	async createUser(@Body() body: CreateUserDto, @Session() session: any) {
 		// console.log(body)
-		return this.authService.signup(body.email, body.password)
+		const user = await this.authService.signup(body.email, body.password)
+		session.userId = user.id
+		return user
 	}
-	//							ClassSerializerInterceptor 2 lines below
+
+	@Post('/signin')
+	async signin(@Body() body: CreateUserDto, @Session() session: any) {
+		const user = await this.authService.signin(body.email, body.password)
+		session.userId = user.id
+		return user
+	}
+	//							ClassSerializerInterceptor 3-4 lines below
 	// Param is used to extract information from incoming request route
 	@Get('/:id')
 	async findUser(@Param('id') id: string) {

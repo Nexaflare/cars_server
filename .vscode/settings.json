@@ -1,10 +1,12 @@
 {
 	"cSpell.words": [
+		"aleksey",
 		"dtos",
 		"Kamil",
 		"Myśliwiec",
 		"nestframework",
 		"signin",
+		"signout",
 		"typeorm"
 	]
 }
