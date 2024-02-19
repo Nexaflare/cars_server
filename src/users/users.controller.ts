@@ -10,6 +10,7 @@ import {
 	NotFoundException,
 	UseInterceptors,
 	ClassSerializerInterceptor,
+	Session,
 } from '@nestjs/common'
 import { CreateUserDto } from './dtos/create-user.dto'
 import { UpdateUserDto } from './dtos/update-user.dto'
@@ -25,17 +26,37 @@ export class UsersController {
 	constructor(
 		private usersService: UsersService,
 		private authService: AuthService
-		) {}
+	) {}
+
+	//***TESTING COOKIES***/
+	// @Get('/colors/:color')
+	// setColor(@Param('color') color: string, @Session() session: any) {
+	// 	session.color = color
+	// }
+
+	// @Get('/colors')
+	// getColor(@Session() session:any) {
+	// 	return session.color;
+	// }
+
+	@Get('/whoami')
+	whoAmI(@Session() session: any) {
+		return this.usersService.findOne(session.userId)
+	}
 
 	@Post('/signup')
-	createUser(@Body() body: CreateUserDto) {
+	async createUser(@Body() body: CreateUserDto, @Session() session: any) {
 		// console.log(body)
-		return this.authService.signup(body.email, body.password)
+		const user = await this.authService.signup(body.email, body.password)
+		session.userId = user.id
+		return user
 	}
 
 	@Post('/signin')
-	signin(@Body() body: CreateUserDto){
-		return this.authService.signin(body.email, body.password)
+	async signin(@Body() body: CreateUserDto, @Session() session: any) {
+		const user = await this.authService.signin(body.email, body.password)
+		session.userId = user.id
+		return user
 	}
 	//							ClassSerializerInterceptor 3-4 lines below
 	// Param is used to extract information from incoming request route
