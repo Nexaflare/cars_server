@@ -52,6 +52,7 @@ export class UsersController {
 
 
 	@Get('/whoami')
+	// If there is no decorator, but only interceptor,  the code would be tedious
 	whoAmI(@CurrentUser() user: string) {
 		return user
 	}

@@ -43,7 +43,7 @@ let UsersController = class UsersController {
         return user;
     }
     async findUser(id) {
-        console.log(...oo_oo(`2224235558_82_2_82_35_4`, `Handler is running`));
+        console.log(...oo_oo(`3071897317_83_2_83_35_4`, `Handler is running`));
         const user = await this.usersService.findOne(parseInt(id));
         if (!user) {
             throw new common_1.NotFoundException('User not found');
