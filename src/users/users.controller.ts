@@ -8,10 +8,11 @@ import {
 	Param,
 	Query,
 	NotFoundException,
-	UseInterceptors,
+	// UseInterceptors,
 	ClassSerializerInterceptor,
 	Session,
 	BadRequestException,
+	UseGuards
 } from '@nestjs/common'
 import { CreateUserDto } from './dtos/create-user.dto'
 import { UpdateUserDto } from './dtos/update-user.dto'
@@ -20,14 +21,15 @@ import { Serialize } from '../interceptors/serialize.interceptor'
 import { UserDto } from './dtos/user.dto'
 import { AuthService } from './auth.service'
 import { CurrentUser } from './decorators/current-user.decorator'
-import { CurrentUserInterceptor} from './interceptors/current-user.interceptor'
+// import { CurrentUserInterceptor} from './interceptors/current-user.interceptor'
 import { User } from './user.entity'
+import { AuthGuard} from '../guards/auth.guard'
 
 @Controller('auth')
 @Serialize(UserDto)
 //*** Comment: whenever a request comes to the controller the User interceptor runs and get the data from database and assigns it to the request object ***//
-@UseInterceptors(CurrentUserInterceptor)
-//*** Comment: Can use @Serialize(UserDto) in any specific request if we want to c (if we have request handlers and we want to customize the response of each of them) ***//
+// @UseInterceptors(CurrentUserInterceptor)
+// //*** Comment: Can use @Serialize(UserDto) in any specific request if we want to c (if we have request handlers and we want to customize the response of each of them) ***//
 export class UsersController {
 	constructor(
 		private usersService: UsersService,
@@ -56,6 +58,7 @@ export class UsersController {
 
 
 	@Get('/whoami')
+	@UseGuards(AuthGuard)
 	//*** Comment: If there is no decorator, but only interceptor,the code would be tedious ***//
 	whoAmI(@CurrentUser() user: User) {
 		return user
