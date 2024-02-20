@@ -37,4 +37,4 @@ export class User {
 	}
 }
 
-// Entity instances help to control and maintain the code and detect bugs  otherwise, we will not see anything in the console
+//*** Comment: Entity instances help to control and maintain the code and detect bugs  otherwise, we will not see anything in the console ***//

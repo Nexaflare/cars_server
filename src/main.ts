@@ -11,7 +11,7 @@ async function bootstrap() {
 	app.useGlobalPipes(
 		new ValidationPipe({
 			whitelist: true,
-			// doesn't take properties that we are not expecting (see CreateUserDto imported to user.controller)
+			//*** Comment: doesn't take properties that we are not expecting (see CreateUserDto imported to user.controller) ***//
 		})
 	)
 	await app.listen(3000)

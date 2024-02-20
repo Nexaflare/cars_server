@@ -18,7 +18,7 @@ export class AuthService {
 		if (users.length) {
 			throw new BadRequestException('This email is in use')
 		}
-		// Hash user's password
+		//***  Comment: Hash user's password ***//
 
 		// Generate the salt
 		const salt = randomBytes(8).toString('hex')
@@ -37,7 +37,7 @@ export class AuthService {
 	}
 
 	async signin(email: string, password: string) {
-		// returns 1 user instead of all users from users.servise(find)
+		//*** Comment: returns 1 user instead of all users from users.service(find) ***//
 		const [user] = await this.usersService.find(email)
 		if (!user) {
 			throw new NotFoundException('User not found')
