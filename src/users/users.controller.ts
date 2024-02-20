@@ -8,7 +8,7 @@ import {
 	Param,
 	Query,
 	NotFoundException,
-	UseInterceptors,
+	// UseInterceptors,
 	ClassSerializerInterceptor,
 	Session,
 	BadRequestException,
@@ -20,14 +20,14 @@ import { Serialize } from '../interceptors/serialize.interceptor'
 import { UserDto } from './dtos/user.dto'
 import { AuthService } from './auth.service'
 import { CurrentUser } from './decorators/current-user.decorator'
-import { CurrentUserInterceptor} from './interceptors/current-user.interceptor'
+// import { CurrentUserInterceptor} from './interceptors/current-user.interceptor'
 import { User } from './user.entity'
 
 @Controller('auth')
 @Serialize(UserDto)
 //*** Comment: whenever a request comes to the controller the User interceptor runs and get the data from database and assigns it to the request object ***//
-@UseInterceptors(CurrentUserInterceptor)
-//*** Comment: Can use @Serialize(UserDto) in any specific request if we want to c (if we have request handlers and we want to customize the response of each of them) ***//
+// @UseInterceptors(CurrentUserInterceptor)
+// //*** Comment: Can use @Serialize(UserDto) in any specific request if we want to c (if we have request handlers and we want to customize the response of each of them) ***//
 export class UsersController {
 	constructor(
 		private usersService: UsersService,

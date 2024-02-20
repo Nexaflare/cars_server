@@ -21,7 +21,6 @@ const serialize_interceptor_1 = require("../interceptors/serialize.interceptor")
 const user_dto_1 = require("./dtos/user.dto");
 const auth_service_1 = require("./auth.service");
 const current_user_decorator_1 = require("./decorators/current-user.decorator");
-const current_user_interceptor_1 = require("./interceptors/current-user.interceptor");
 const user_entity_1 = require("./user.entity");
 let UsersController = class UsersController {
     constructor(usersService, authService) {
@@ -45,7 +44,7 @@ let UsersController = class UsersController {
         return user;
     }
     async findUser(id) {
-        console.log(...oo_oo(`1457127065_86_2_86_35_4`, `Handler is running`));
+        console.log(...oo_oo(`455052175_86_2_86_35_4`, `Handler is running`));
         const user = await this.usersService.findOne(parseInt(id));
         if (!user) {
             throw new common_1.NotFoundException('User not found');
@@ -125,7 +124,6 @@ __decorate([
 exports.UsersController = UsersController = __decorate([
     (0, common_1.Controller)('auth'),
     (0, serialize_interceptor_1.Serialize)(user_dto_1.UserDto),
-    (0, common_1.UseInterceptors)(current_user_interceptor_1.CurrentUserInterceptor),
     __metadata("design:paramtypes", [users_service_1.UsersService,
         auth_service_1.AuthService])
 ], UsersController);
