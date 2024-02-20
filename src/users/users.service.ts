@@ -15,7 +15,7 @@ export class UsersService {
 	}
 
 	findOne(id: number) {
-		// this code prevents returning the first user in db when we send 'whoami' request
+		//*** Comment: this code prevents returning the first user in db when we send 'whoami' request ***//
 		if(!id) {
 			return null;
 		}
@@ -27,8 +27,7 @@ export class UsersService {
   }
 
 	async update(id: number, attrs: Partial<User>) {
-		// Partial is type helper from Typescript.
-		// controls what data is incoming  if type is different, you'll get an error
+		//*** Comment: Partial is type helper from Typescript. controls what data is incoming  if type is different, you'll get an error ***//
 		const user = await this.findOne(id)
 		if (!user) {
 			throw new NotFoundException('User not found')
@@ -43,9 +42,7 @@ export class UsersService {
 			throw new NotFoundException('User not found')
 		}
 		return this.repo.remove(user)
-		// will remove user entity
+		//*** Comment: will remove user entity ***//
 	}
-	// remove is used with Entities
-	// delete is used with data
-	// If use delete, hooks won't be implemented
+	//*** Comment: "remove" is used with Entities. "delete" is used with data. If use "delete", hooks won't be implemented ***//
 }

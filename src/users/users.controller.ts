@@ -20,10 +20,14 @@ import { Serialize } from '../interceptors/serialize.interceptor'
 import { UserDto } from './dtos/user.dto'
 import { AuthService } from './auth.service'
 import { CurrentUser } from './decorators/current-user.decorator'
+import { CurrentUserInterceptor} from './interceptors/current-user.interceptor'
+import { User } from './user.entity'
 
 @Controller('auth')
 @Serialize(UserDto)
-// Can use @Serialize(UserDto) in any specific request if we want to c (if we have request handlers and we want to customize the response of each of them)
+//*** Comment: whenever a request comes to the controller the User interceptor runs and get the data from database and assigns it to the request object ***//
+@UseInterceptors(CurrentUserInterceptor)
+//*** Comment: Can use @Serialize(UserDto) in any specific request if we want to c (if we have request handlers and we want to customize the response of each of them) ***//
 export class UsersController {
 	constructor(
 		private usersService: UsersService,
@@ -52,11 +56,11 @@ export class UsersController {
 
 
 	@Get('/whoami')
-	// If there is no decorator, but only interceptor,  the code would be tedious
-	whoAmI(@CurrentUser() user: string) {
+	//*** Comment: If there is no decorator, but only interceptor,the code would be tedious ***//
+	whoAmI(@CurrentUser() user: User) {
 		return user
 	}
-
+	//*** Comment: the downside is that whenever we want to use the decorator, we have to import "CurrentUserInterceptor" and "UseInterceptors", and apply them to the "Controller"  if we have a lot of "Controllers", there will be too many duplicates.
 	@Post('/signout')
 	signOut(@Session() session: any) {
 		session.userId = null
@@ -76,8 +80,7 @@ export class UsersController {
 		session.userId = user.id
 		return user
 	}
-	//							ClassSerializerInterceptor 3-4 lines below
-	// Param is used to extract information from incoming request route
+	//*** Comment: ClassSerializerInterceptor 3-4 lines below. Param is used to extract information from incoming request route ***// 
 	@Get('/:id')
 	async findUser(@Param('id') id: string) {
 		console.log(`Handler is running`)

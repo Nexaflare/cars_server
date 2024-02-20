@@ -5,6 +5,6 @@ export const CurrentUser = createParamDecorator(
 		const request = context.switchToHttp().getRequest();
 		return request.currentUser 
 	}
-)// can't use dependency injection with param decorator
+)
 
-// interceptor solves this problem  
+//*** Comment: can't use dependency injection with param decorator. interceptor solves this problem  *//

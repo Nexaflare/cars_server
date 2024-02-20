@@ -12,7 +12,7 @@ import { Report } from './reports/report.entity'
 			type: 'sqlite',
 			database: 'db.sqlite',
 			entities: [User, Report],
-			// for user entity, and report entity
+			//*** Comment: for user entity, and report entity ***//
 			synchronize: true,
 		}),
 		UsersModule,
