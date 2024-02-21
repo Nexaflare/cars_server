@@ -1,5 +1,4 @@
 import { CanActivate, ExecutionContext } from '@nestjs/common'
-import { Observable } from 'rxjs'
 
 // *** Comment: CanActivate is an interface similar to Interceptors  to make sure we define all the functions to the class so that it will behave as a guard correctly.
 export class AuthGuard implements CanActivate {
