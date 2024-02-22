@@ -2,15 +2,17 @@ import { Test } from '@nestjs/testing'
 import { AuthService } from './auth.service'
 import { UsersService } from './users.service'
 import { User } from './user.entity'
+import { BadRequestException } from '@nestjs/common';
 
 //*** Comment: All tests related to AuthService are defined inside the callback function provided to describe. Organizes the test into categories or tests component in isolation***///
 describe('AuthService', () => {
 	let service: AuthService
+	let fakeUsersService: Partial<UsersService>
 
 	//*** Comment: Runs some setup code before each test in the enclosing describe block is executed. Ensures that tests do not affect each other and are isolated. ***//
 	beforeEach(async () => {
 		// Create a fake copy of the user service
-		const fakeUserService: Partial<UsersService> = {
+		 fakeUsersService = {
 			find: () => Promise.resolve([]),
 			create: (email: string, password: string) =>
 				Promise.resolve({ id: 1, email, password } as User),
@@ -21,7 +23,7 @@ describe('AuthService', () => {
 				AuthService,
 				{
 					provide: UsersService,
-					useValue: fakeUserService,
+					useValue: fakeUsersService,
 					//*** Comment: if anyone asks for a copy of 'UserService', then give them the value of 'fakeUserService' === { find, create} ***//
 				},
 			],
@@ -33,7 +35,7 @@ describe('AuthService', () => {
 	//*** Comment: Each 'it statement will test 1 aspect of the code ***//
 	it('can create an instance of auth service', async () => {
 		expect(service).toBeDefined()
-		// successfully created a service and defined it in some way
+		//*** Comment:  successfully created a service and defined it in some way ***//
 	})
 
 	it('creates a new user with salted and hashed password', async () => {
@@ -44,4 +46,13 @@ describe('AuthService', () => {
 		expect(salt).toBeDefined();
 		expect(hash).toBeDefined();
 	})
+
+	it('throws an error if user signs up with email that is in use', async () => {
+    fakeUsersService.find = () =>
+ 
+      Promise.resolve([{ id: 1, email: 'a', password: '1' } as User]);
+    await expect(service.signup('asdf@asdf.com', 'asdf')).rejects.toThrow(
+      BadRequestException,
+    );
+  });
 })
