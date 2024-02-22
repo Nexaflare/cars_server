@@ -2,7 +2,7 @@ import { Test } from '@nestjs/testing'
 import { AuthService } from './auth.service'
 import { UsersService } from './users.service'
 import { User } from './user.entity'
-import { BadRequestException } from '@nestjs/common';
+import { BadRequestException, NotFoundException } from '@nestjs/common';
 
 //*** Comment: All tests related to AuthService are defined inside the callback function provided to describe. Organizes the test into categories or tests component in isolation***///
 describe('AuthService', () => {
@@ -55,4 +55,10 @@ describe('AuthService', () => {
       BadRequestException,
     );
   });
+	it('throws if signin is called with an unused email', async () => {
+    await expect(
+      service.signin('asdflkj@asdlfkj.com', 'passdflkj'),
+    ).rejects.toThrow(NotFoundException);
+  });
+
 })
