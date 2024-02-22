@@ -3,12 +3,11 @@ import { AuthService } from './auth.service'
 import { UsersService } from './users.service'
 import { User } from './user.entity'
 
-
-//*** Comment: All tests related to AuthService are defined inside the callback function provided to describe. ***///
+//*** Comment: All tests related to AuthService are defined inside the callback function provided to describe. Organizes the test into categories or tests component in isolation***///
 describe('AuthService', () => {
-
 	let service: AuthService
 
+	//*** Comment: Runs some setup code before each test in the enclosing describe block is executed. Ensures that tests do not affect each other and are isolated. ***//
 	beforeEach(async () => {
 		// Create a fake copy of the user service
 		const fakeUserService: Partial<UsersService> = {
@@ -35,5 +34,14 @@ describe('AuthService', () => {
 	it('can create an instance of auth service', async () => {
 		expect(service).toBeDefined()
 		// successfully created a service and defined it in some way
+	})
+
+	it('creates a new user with salted and hashed password', async () => {
+		const user = await service.signup('asdf@asdf.com', 'asdf')
+
+		expect(user.password).not.toEqual('asdf')
+		const [salt, hash] = user.password.split('.')
+		expect(salt).toBeDefined();
+		expect(hash).toBeDefined();
 	})
 })
