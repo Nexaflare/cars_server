@@ -27,7 +27,7 @@ describe('AuthService', () => {
 				users.push(user)
 				return Promise.resolve(user)
 			},
-		}
+		} 
 		const module = await Test.createTestingModule({
 			//*** Comment: 'providers' is used for including classes that we want to use in our dependency injection ***//
 			providers: [
